@@ -8,7 +8,7 @@ import {cartItems} from '../store/action'
 const CartScreen = (props) => {
   const [updateCart, setupdateCart] = useState(props.cart)
   const [totalAmount, settotalAmount] = useState(0)
-   const cart = updateCart;
+   const cart = updateCart
   const addItemsCount = (id) => {
       let newValue = cart.map(obj => {
         if(obj.id !== id) return obj 
@@ -26,13 +26,18 @@ const CartScreen = (props) => {
 
    useEffect(() => {
     props.addCartItems(updateCart)
+    if(cart.length < 0){
     props.navigation.state.params.refresh(updateCart)
+    }
     settotalAmount(Math.floor(updateCart.reduce((acc, curr) => {
     return acc + (curr.price * curr.count)
        }, 0)))
    }, [updateCart])
 
    console.log(totalAmount)
+   if(cart.length === 0){
+     return <View><Text>Cart is empty!!!!</Text></View>
+   } else{
     return(
       <View>
         <View style={styles.totalBox}>
@@ -68,6 +73,7 @@ const CartScreen = (props) => {
         </View>
         </View>
     )
+   }
 }
 
 const mapStateToProps = (state) => {

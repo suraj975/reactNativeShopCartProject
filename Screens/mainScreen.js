@@ -11,7 +11,9 @@ const MainScreen = (props) => {
 
     const addItems = (item) => {
     setCart(true)
+    if(!item.count){
     item.count = 1;
+    }
     setCartItems(cartItems => cartItems.concat(item))
     }
     const refreshFunction = (value) => {
@@ -26,7 +28,6 @@ const MainScreen = (props) => {
         }, [cart])
 
         useEffect(() => { 
-            console.log(cartItems)
             let newArr = cartItems
             for(let i=0; i< newArr.length; i++){
               for(let j=1; j < newArr.length; j++){
@@ -63,7 +64,7 @@ const MainScreen = (props) => {
                            <View style={{alignSelf:"stretch", flex:1}}>
                                <Button
                                title="Details"
-                               onPress={() => checktheValue(props)}
+                               onPress={() => props.navigation.navigate("Detail", {itemType: item.id})}
                                />
                            </View>
                            <View style={{flex:1}}>
