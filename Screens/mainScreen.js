@@ -11,9 +11,7 @@ const MainScreen = (props) => {
 
     const addItems = (item) => {
     setCart(true)
-    if(!item.count){
     item.count = 1;
-    }
     setCartItems(cartItems => cartItems.concat(item))
     }
     const refreshFunction = (value) => {
@@ -28,6 +26,7 @@ const MainScreen = (props) => {
         }, [cart])
 
         useEffect(() => { 
+            console.log(cartItems)
             let newArr = cartItems
             for(let i=0; i< newArr.length; i++){
               for(let j=1; j < newArr.length; j++){
@@ -64,7 +63,7 @@ const MainScreen = (props) => {
                            <View style={{alignSelf:"stretch", flex:1}}>
                                <Button
                                title="Details"
-                               onPress={() => props.navigation.navigate("Detail", {itemType: item.id})}
+                               onPress={() => checktheValue(props)}
                                />
                            </View>
                            <View style={{flex:1}}>
@@ -86,9 +85,11 @@ const MainScreen = (props) => {
 }
 
 MainScreen.navigationOptions = ({navigation}) => {
+    console.group(navigation)
     return{
         title: "Title center",
         headerRight: navigation.getParam('headerRight'),
+        headerLeft:<TouchableOpacity onPress={() => navigation.openDrawer()}><Text>Menu</Text></TouchableOpacity>,
         headerTitleStyle: { 
             textAlign:"center", 
             flex:1 
